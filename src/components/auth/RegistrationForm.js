@@ -1,4 +1,6 @@
-import React from 'react';
+import React from 'react'
+import { connect } from "react-redux"
+
 import {
   Form,
   Input,
@@ -6,12 +8,12 @@ import {
   Icon,
   Select,
   Checkbox,
-  Button,
-  AutoComplete,
-} from 'antd';
+  Button
+} from 'antd'
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
+import { register } from '../../actions/auth'
+
+const { Option } = Select
 
 class RegistrationForm extends React.Component {
   state = {
@@ -22,8 +24,8 @@ class RegistrationForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
+      this.props.register(err, values)
       if (!err) {
-        debugger
         console.log('Received values of form: ', values);
       }
     });
@@ -51,19 +53,8 @@ class RegistrationForm extends React.Component {
     callback();
   };
 
-  handleWebsiteChange = value => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
-    this.setState({ autoCompleteResult });
-  };
-
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
 
     const formItemLayout = {
       labelCol: { xs: { span: 20, offset: 3 }, sm: { span: 3, offset: 1 } },
@@ -81,10 +72,6 @@ class RegistrationForm extends React.Component {
         <Option value="92">+92</Option>
       </Select>,
     );
-
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
@@ -147,19 +134,7 @@ class RegistrationForm extends React.Component {
             rules: [{ required: true, message: 'Please input your phone number!' }],
           })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
         </Form.Item>
-        <Form.Item label="Website">
-          {getFieldDecorator('website', {
-            rules: [{ required: true, message: 'Please input website!' }],
-          })(
-            <AutoComplete
-              dataSource={websiteOptions}
-              onChange={this.handleWebsiteChange}
-              placeholder="website"
-            >
-              <Input />
-            </AutoComplete>,
-          )}
-        </Form.Item>
+
         <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator('agreement', {
             valuePropName: 'checked',
@@ -181,4 +156,4 @@ class RegistrationForm extends React.Component {
 
 const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationForm);
 
-export default WrappedRegistrationForm;
+export default connect(null, { register })(WrappedRegistrationForm);

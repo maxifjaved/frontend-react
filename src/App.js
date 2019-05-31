@@ -1,35 +1,35 @@
 import React from 'react';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { Route } from "react-router-dom";
 
-import { Menu, Icon } from 'antd';
+import Loader from './components/common/Loader'
+import GuestRoute from './components/routes/GuestRoute'
+import RegistrationForm from './components/auth/RegistrationForm'
+import LoginForm from './components/auth/LoginForm'
 
-const { SubMenu } = Menu;
+const App = ({ location, isLoading, isAuthenticated }) => (
+  <div>
+    <Loader spinning={isLoading} fullScreen={true} />
+    <GuestRoute
+      location={location}
+      path="/register"
+      exact
+      component={RegistrationForm}
+    />
 
-class App extends React.Component {
-  state = {
-    current: 'mail',
-  };
-
-  handleClick = e => {
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
-    });
-  };
-
-  render() {
-    return (
-      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-        <Menu.Item key="login">
-          <Icon type="login" />
-          Login
-        </Menu.Item>
-        <Menu.Item key="register">
-          <Icon type="user" />
-          Register
-        </Menu.Item>
-      </Menu>
-    );
+    <GuestRoute
+      location={location}
+      path="/login"
+      exact
+      component={LoginForm}
+    />
+  </div>
+)
+function mapStateToProps(state) {
+  return {
+    isLoading: state.loading.isLoading
   }
 }
 
-export default App;
+export default connect(mapStateToProps, null)(App);

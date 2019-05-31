@@ -2,6 +2,7 @@ import './assets/index.css'
 
 import React from 'react'
 import { render } from 'react-dom'
+import { BrowserRouter, Route } from "react-router-dom";
 import { Provider } from 'react-redux'
 
 import * as serviceWorker from './serviceWorker'
@@ -13,9 +14,11 @@ const store = configureStore();
 
 const renderApp = () =>
   render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
+    <BrowserRouter>
+      <Provider store={store}>
+        <Route component={App} />
+      </Provider>
+    </BrowserRouter>,
     document.getElementById('root')
   )
 
