@@ -1,18 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-import GuestLayout from '../layouts/GuestLayout'
 const UserRoute = ({ isAuthenticated, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
       !isAuthenticated ? (
-        <>
-          <GuestLayout />
+        <Fragment>
           <Component {...props} />
-        </>
+        </Fragment>
       ) : (
           <Redirect to="/dashboard" />
         )}

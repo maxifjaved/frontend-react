@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 
 import {
   Form,
@@ -10,6 +11,7 @@ import {
   Checkbox,
   Button
 } from 'antd'
+import Auth from './Auth'
 
 import { register } from '../../actions/auth'
 
@@ -56,13 +58,7 @@ class RegistrationForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
 
-    const formItemLayout = {
-      labelCol: { xs: { span: 20, offset: 3 }, sm: { span: 3, offset: 1 } },
-      wrapperCol: { xs: { span: 23, offset: 1 }, sm: { span: 17, offset: 1 } },
-    };
-    const tailFormItemLayout = {
-      wrapperCol: { xs: { span: 20, offset: 3, }, sm: { span: 18, offset: 5 } },
-    };
+
     const prefixSelector = getFieldDecorator('prefix', {
       initialValue: '92',
     })(
@@ -74,82 +70,93 @@ class RegistrationForm extends React.Component {
     );
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="E-mail">
-          {getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                required: true,
-                message: 'Please input your E-mail!',
-              },
-            ],
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-              {
-                validator: this.validateToNextPassword,
-              },
-            ],
-          })(<Input.Password />)}
-        </Form.Item>
-        <Form.Item label="Confirm Password" hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!',
-              },
-              {
-                validator: this.compareToFirstPassword,
-              },
-            ],
-          })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-        </Form.Item>
-        <Form.Item
-          label={
-            <span>
-              Nickname&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          }
-        >
-          {getFieldDecorator('nickname', {
-            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Phone Number">
-          {getFieldDecorator('phone', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
-          })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
-        </Form.Item>
+      <Auth type="register">
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            {getFieldDecorator('email', {
+              rules: [
+                {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+                },
+                {
+                  required: true,
+                  message: 'Please input your E-mail!',
+                },
+              ],
+            })(<Input
+              prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Email"
+            />)}
+          </Form.Item>
+          <Form.Item hasFeedback>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your password!',
+                },
+                {
+                  validator: this.validateToNextPassword,
+                },
+              ],
+            })(<Input.Password
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Password"
+            />)}
+          </Form.Item>
+          <Form.Item hasFeedback>
+            {getFieldDecorator('confirm', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please confirm your password!',
+                },
+                {
+                  validator: this.compareToFirstPassword,
+                },
+              ],
+            })(<Input.Password
+              onBlur={this.handleConfirmBlur}
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Confirm Password"
+            />)}
+          </Form.Item>
+          <Form.Item>
+            {getFieldDecorator('username', {
+              rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
+            })(<Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Username"
+            />)}
+          </Form.Item>
+          <Form.Item >
+            {getFieldDecorator('phone', {
+              rules: [{ required: true, message: 'Please input your phone number!' }],
+            })(<Input
+              addonBefore={prefixSelector} style={{ width: '100%' }}
+              prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Phone Number"
+            />)}
+          </Form.Item>
 
-        <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
-            valuePropName: 'checked',
-          })(
-            <Checkbox>
-              I have read the <a href="">agreement</a>
-            </Checkbox>,
-          )}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            Register
+          <Form.Item >
+            {getFieldDecorator('agreement', {
+              valuePropName: 'checked',
+            })(
+              <Checkbox>
+                I have read the <a href="">agreement</a>
+              </Checkbox>,
+            )}
+          </Form.Item>
+          <Form.Item >
+            <Button type="primary" htmlType="submit">
+              Register
           </Button>
-        </Form.Item>
-      </Form>
+            Or <Link to="/login"> login now! </Link>
+          </Form.Item>
+        </Form>
+      </Auth>
     );
   }
 }

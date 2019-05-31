@@ -1,0 +1,61 @@
+.form {
+  position: absolute;
+  top: 40%;
+  left: 45%;
+  margin: -160px 0 0 -160px;
+  width: 390px;
+  height: 370px;
+  padding: 36px;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
+}
+
+.login {}
+
+.register {
+  top: 30%;
+  width: 390px;
+  height: 570px;
+}
+
+.form button {
+  width: 100%;
+}
+
+.form p {
+  color: #cccccc;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo img {
+  width: 40px;
+  margin-right: 8px;
+}
+
+.logo span {
+  vertical-align: text-bottom;
+  font-size: 16px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: 700;
+  color: #1890ff;
+  background-image: -webkit-gradient(linear, 37.219838% 34.532506%, 36.425669% 93.178216%, from(#29cdff), to(#0a60ff), color-stop(.37, #148eff));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ant-spin-container, .ant-spin-nested-loading {
+  height: 100%;
+}
