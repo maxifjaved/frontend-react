@@ -5,11 +5,11 @@ import { Link } from "react-router-dom"
 import {
   Form,
   Input,
-  Tooltip,
   Icon,
   Select,
   Checkbox,
-  Button
+  Button,
+  DatePicker
 } from 'antd'
 import Auth from './Auth'
 
@@ -26,9 +26,10 @@ class RegistrationForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      this.props.register(err, values)
+
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.props.register(values)
+        // console.log('Received values of form: ', values);
       }
     });
   };
@@ -50,7 +51,7 @@ class RegistrationForm extends React.Component {
   validateToNextPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
+      form.validateFields(['confirmationPassword'], { force: true });
     }
     callback();
   };
@@ -69,9 +70,20 @@ class RegistrationForm extends React.Component {
       </Select>,
     );
 
+    const config = {
+      rules: [{ type: 'object', required: true, message: 'Please select time!' }],
+    };
     return (
       <Auth type="register">
         <Form onSubmit={this.handleSubmit}>
+          <Form.Item>
+            {getFieldDecorator('username', {
+              rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
+            })(<Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Username"
+            />)}
+          </Form.Item>
           <Form.Item>
             {getFieldDecorator('email', {
               rules: [
@@ -106,7 +118,7 @@ class RegistrationForm extends React.Component {
             />)}
           </Form.Item>
           <Form.Item hasFeedback>
-            {getFieldDecorator('confirm', {
+            {getFieldDecorator('confirmationPassword', {
               rules: [
                 {
                   required: true,
@@ -122,14 +134,7 @@ class RegistrationForm extends React.Component {
               placeholder="Confirm Password"
             />)}
           </Form.Item>
-          <Form.Item>
-            {getFieldDecorator('username', {
-              rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
-            })(<Input
-              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Username"
-            />)}
-          </Form.Item>
+
           <Form.Item >
             {getFieldDecorator('phone', {
               rules: [{ required: true, message: 'Please input your phone number!' }],
@@ -138,6 +143,25 @@ class RegistrationForm extends React.Component {
               prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder="Phone Number"
             />)}
+          </Form.Item>
+          <Form.Item >
+            {getFieldDecorator('dob', config)(<DatePicker style={{ width: '100%' }}
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)', width: '100%' }} />}
+              placeholder="Date Of Birth"
+            />)}
+          </Form.Item>
+          <Form.Item>
+            {getFieldDecorator('gender', {
+              rules: [{ required: true, message: 'Please select your gender!' }],
+            })(
+              <Select
+                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)', width: '100%' }} />}
+                placeholder="Select Gender"
+              >
+                <Option value="male">male</Option>
+                <Option value="female">female</Option>
+              </Select>,
+            )}
           </Form.Item>
 
           <Form.Item >

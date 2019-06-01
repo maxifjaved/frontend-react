@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import { Link } from "react-router-dom"
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
+
+import { login } from '../../actions/auth'
 
 import Auth from './Auth'
 class NormalLoginForm extends React.Component {
@@ -8,6 +11,7 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.props.login(values)
         console.log('Received values of form: ', values);
       }
     });
@@ -19,25 +23,21 @@ class NormalLoginForm extends React.Component {
       <Auth type="login">
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            {getFieldDecorator('username', {
-              rules: [{ required: true, message: 'Please input your username!' }],
+            {getFieldDecorator('identifier', {
+              rules: [{ required: true, message: 'Please input your username/email!' }],
             })(
               <Input
                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="Username"
-              />,
-            )}
+                placeholder="Username/Email"
+              />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('password', {
               rules: [{ required: true, message: 'Please input your Password!' }],
-            })(
-              <Input
-                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                type="password"
-                placeholder="Password"
-              />,
-            )}
+            })(<Input
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="password"
+              placeholder="Password" />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('remember', {
@@ -60,4 +60,4 @@ class NormalLoginForm extends React.Component {
 
 const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
 
-export default WrappedNormalLoginForm;
+export default connect(null, { login })(WrappedNormalLoginForm);
