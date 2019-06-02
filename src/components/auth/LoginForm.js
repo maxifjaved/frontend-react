@@ -1,18 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from "react-router-dom"
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
 
 import { login } from '../../actions/auth'
+import { loader } from '../../actions/loader'
 
 import Auth from './Auth'
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        this.props.login(values)
-        console.log('Received values of form: ', values);
+        let nsg_message = message.loading('Action in progress..', 0)
+        try {
+          await this.props.login(values);
+          nsg_message(0.2)
+          message.success('Loading finished')
+        } catch (error) {
+          if (error.response) {
+            const { errors } = error.response.data
+            nsg_message(0.2)
+            message.error(errors.form)
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        }
+        this.props.loader(false)
       }
     });
   };
@@ -60,4 +77,4 @@ class NormalLoginForm extends React.Component {
 
 const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
 
-export default connect(null, { login })(WrappedNormalLoginForm);
+export default connect(null, { login, loader })(WrappedNormalLoginForm);

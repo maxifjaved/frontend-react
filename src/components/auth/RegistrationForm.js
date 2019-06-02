@@ -14,6 +14,7 @@ import {
 import Auth from './Auth'
 
 import { register } from '../../actions/auth'
+import { loader } from '../../actions/loader'
 
 const { Option } = Select
 
@@ -25,11 +26,30 @@ class RegistrationForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
-        this.props.register(values)
-        // console.log('Received values of form: ', values);
+        try {
+          this.props.loader(true)
+          await this.props.register(values);
+        } catch (error) {
+          if (error.response) {
+            const { errors } = error.response.data
+            let nsg_v_error = {}
+            for (const key in errors) {
+              nsg_v_error[key] = {
+                value: values[key],
+                errors: [new Error(errors[key])],
+              };
+            }
+            this.props.form.setFields(nsg_v_error);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        }
+        this.props.loader(false)
       }
     });
   };
@@ -187,4 +207,4 @@ class RegistrationForm extends React.Component {
 
 const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationForm);
 
-export default connect(null, { register })(WrappedRegistrationForm);
+export default connect(null, { register, loader })(WrappedRegistrationForm);
