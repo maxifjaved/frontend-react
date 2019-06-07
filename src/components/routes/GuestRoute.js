@@ -12,7 +12,7 @@ const UserRoute = ({ isAuthenticated, component: Component, ...rest }) => (
           <Component {...props} />
         </Fragment>
       ) : (
-          <Redirect to="/dashboard" />
+          <Redirect to="/" />
         )}
   />
 );
