@@ -1,7 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Dropdown, Avatar } from 'antd';
 import styles from './index.module.css';
+import { from } from 'rxjs';
 
 const { Header, Sider, Content } = Layout;
 
@@ -18,6 +20,25 @@ class BasicLayout extends React.Component {
   };
 
   render() {
+    const { currentUser } = this.props
+    const menu = (
+      <Menu className={styles.menu} selectedKeys={[]} onClick={() => { }}>
+        <Menu.Item disabled>
+          <Icon type="user" />Personal Center
+        </Menu.Item>
+        <Menu.Item disabled>
+          <Icon type="setting" />Setting
+        </Menu.Item>
+        <Menu.Item key="triggerError">
+          <Icon type="close-circle" />Trigger error
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="logout">
+          <Icon type="logout" />Sign out
+        </Menu.Item>
+      </Menu>
+    );
+
     return (
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -49,13 +70,21 @@ class BasicLayout extends React.Component {
           </Menu>
         </Sider>
         <div className={styles.container}>
-          <Header style={{ height: 64, boxShadow: "0 1px 4px rgba(0, 21, 41, 0.08)", background: '#fff', padding: '0 12px 0 0' }}>
+          <Header className={styles.header}>
             <Icon
               style={{ fontSize: 25, padding: '0 24px' }}
               className="trigger"
               type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
+            <div className={styles.right}>
+              <Dropdown overlay={menu}>
+                <span className={`${styles.action} ${styles.account}`}>
+                  <Avatar size="small" className={styles.avatar} src={currentUser.image} />
+                  <span className={styles.name}>{currentUser.username}</span>
+                </span>
+              </Dropdown>
+            </div>
           </Header>
           <Content className={styles.content} >
             {this.props.children}
@@ -68,4 +97,10 @@ class BasicLayout extends React.Component {
 
 BasicLayout.propTypes = {}
 
-export default BasicLayout
+
+function mapStateToProps(state) {
+  return {
+    currentUser: state.user
+  };
+}
+export default connect(mapStateToProps)(BasicLayout)

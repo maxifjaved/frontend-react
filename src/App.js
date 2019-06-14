@@ -14,24 +14,28 @@ import Chats from './components/chats'
 const App = ({ location, isLoading, isAuthenticated }) => (
   <div>
     <Loader spinning={isLoading} fullScreen={true} />
+
     <UserRoute
       location={location}
       path="/"
       exact
       component={Users}
     />
+
     <UserRoute
       location={location}
       path="/discovery"
       exact
       component={Discovery}
     />
+
     <UserRoute
       location={location}
       path="/chats"
       exact
       component={Chats}
     />
+
     <GuestRoute
       location={location}
       path="/register"

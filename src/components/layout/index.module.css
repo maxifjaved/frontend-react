@@ -1,3 +1,8 @@
+:global .ant-layout {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 .logo {
   text-align: center;
   cursor: pointer;
@@ -25,21 +30,6 @@
   -webkit-text-fill-color: transparent;
 }
 
-.backTop {
-  right: 50px;
-}
-
-.backTop :global .ant-back-top-content {
-  background: '';
-  opacity: 0.3;
-  transition: all 0.3s;
-  box-shadow: 0 0 15px 1px rgba(69, 65, 78, 0.1);
-}
-
-.backTop :global .ant-back-top-content:hover {
-  opacity: 1;
-}
-
 .content {
   padding: 24px;
   min-height: calc(100% - 72px);
@@ -53,22 +43,22 @@
   overflow-x: hidden;
 }
 
-.footer {
+.header {
+  height: 64px;
+  padding: 0 12px 0 0;
   background: #fff;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 24px;
-  padding-bottom: 24px;
-  min-height: 72px;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  position: relative;
+}
+
+.right {
+  float: right;
+  height: 100%;
 }
 
 @media (max-width: 767px) {
   .content {
     padding: 12px;
-  }
-  .backTop {
-    right: 20px;
-    bottom: 20px;
   }
   .container {
     height: 100vh;
