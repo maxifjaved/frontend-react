@@ -3,11 +3,15 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { Route, Redirect } from "react-router-dom"
 
+import Layout from '../layout'
+
 const UserRoute = ({ isAuthenticated, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />}
+      isAuthenticated ? <Layout>
+        <Component {...props} />
+      </Layout> : <Redirect to="/login" />}
   />
 );
 

@@ -1,0 +1,78 @@
+.logo {
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo img {
+  width: 40px;
+  margin-right: 8px;
+}
+
+.logo span {
+  vertical-align: text-bottom;
+  font-size: 16px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: 700;
+  color: #1890ff;
+  background-image: -webkit-gradient(linear, 37.219838% 34.532506%, 36.425669% 93.178216%, from(#29cdff), to(#0a60ff), color-stop(.37, #148eff));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.backTop {
+  right: 50px;
+}
+
+.backTop :global .ant-back-top-content {
+  background: '';
+  opacity: 0.3;
+  transition: all 0.3s;
+  box-shadow: 0 0 15px 1px rgba(69, 65, 78, 0.1);
+}
+
+.backTop :global .ant-back-top-content:hover {
+  opacity: 1;
+}
+
+.content {
+  padding: 24px;
+  min-height: calc(100% - 72px);
+}
+
+.container {
+  height: 100vh;
+  flex: 1;
+  width: calc(100% - 256px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.footer {
+  background: #fff;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  min-height: 72px;
+}
+
+@media (max-width: 767px) {
+  .content {
+    padding: 12px;
+  }
+  .backTop {
+    right: 20px;
+    bottom: 20px;
+  }
+  .container {
+    height: 100vh;
+    flex: 1;
+    width: 100%;
+  }
+}
