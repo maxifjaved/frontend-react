@@ -69,7 +69,7 @@ class BasicLayout extends React.Component {
             </Menu.Item>
           </Menu>
         </Sider>
-        <div className={styles.container}>
+        <div id="main-content-div" className={styles.container}>
           <Header className={styles.header}>
             <Icon
               style={{ fontSize: 25, padding: '0 24px' }}
@@ -100,7 +100,7 @@ BasicLayout.propTypes = {}
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.user
+    currentUser: state.user.auth
   };
 }
 export default connect(mapStateToProps)(BasicLayout)

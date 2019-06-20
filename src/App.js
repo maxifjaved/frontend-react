@@ -61,7 +61,7 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     isLoading: state.loading.isLoading,
-    isAuthenticated: !state.user.username
+    isAuthenticated: !state.user.auth.username
   }
 }
 

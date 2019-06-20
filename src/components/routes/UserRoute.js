@@ -22,7 +22,7 @@ UserRoute.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.user.username
+    isAuthenticated: !state.user.auth.username
   };
 }
 

@@ -8,16 +8,17 @@ import { loader } from '../../actions/loader'
 
 import Auth from './Auth'
 class NormalLoginForm extends React.Component {
+
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields(async (err, values) => {
+    this.props.form.validateFields((err, values) => {
       if (!err) {
         let nsg_message = message.loading('Action in progress..', 0)
-        try {
-          await this.props.login(values);
+        this.props.login(values).then(data => {
           nsg_message(0.2)
           message.success('Loading finished')
-        } catch (error) {
+        }).catch(error => {
+          console.error(error)
           if (error.response) {
             const { errors } = error.response.data
             nsg_message(0.2)
@@ -28,7 +29,9 @@ class NormalLoginForm extends React.Component {
             console.log('Error', error.message);
           }
           console.log(error.config);
-        }
+        });
+
+
         this.props.loader(false)
       }
     });

@@ -1,61 +1,20 @@
-.form {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  margin: -160px 0 0 -160px;
-  width: 390px;
-  height: 370px;
-  padding: 36px;
-  box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
+.ant-advanced-search-form {
+  padding: 16px 8px;
+  background: #f8f8f8;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
 }
 
-.login {}
-
-.register {
-  top: 30%;
-  width: 390px;
-  height: 630px;
+.ant-row {
+  position: relative;
+  left: -6px;
 }
 
-.form button {
-  width: 100%;
+.ant-btn {
+  margin-left: 8px;
 }
 
-.form p {
-  color: #cccccc;
-  text-align: center;
-  margin-top: 16px;
-  font-size: 12px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.logo {
-  text-align: center;
-  cursor: pointer;
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logo img {
-  width: 40px;
-  margin-right: 8px;
-}
-
-.logo span {
-  vertical-align: text-bottom;
-  font-size: 16px;
-  text-transform: uppercase;
-  display: inline-block;
-  font-weight: 700;
-  color: #1890ff;
-  background-image: -webkit-gradient(linear, 37.219838% 34.532506%, 36.425669% 93.178216%, from(#29cdff), to(#0a60ff), color-stop(.37, #148eff));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.ant-spin-container, .ant-spin-nested-loading {
-  height: 100%;
+.nsg-table-btn {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }

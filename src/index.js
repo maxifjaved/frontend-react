@@ -7,28 +7,43 @@ import { Provider } from 'react-redux'
 import { message } from 'antd'
 // import decode from "jwt-decode";
 import { refreshToken, userLoggedIn } from './actions/auth'
+import apis from './apis/auth'
 import * as serviceWorker from './serviceWorker'
 import App from './App'
 import configureStore from './configureStore'
 
 import setAuthorizationHeader from './utils/setAuthorizationHeader'
 const store = configureStore()
+store.dispatch(userLoggedIn({}));
 
-if (localStorage.authApp) {
-  // const payload = decode(localStorage.authApp);
-  // store.dispatch(userLoggedIn(payload));
+(async () => {
+  if (localStorage.authApp) {
+    setAuthorizationHeader(localStorage.authApp)
+    try {
+      let rtoken = await apis.refreshToken()
+      console.log(rtoken)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+})()
+// if (localStorage.authApp) {
+//   // const payload = decode(localStorage.authApp);
+//   // store.dispatch(userLoggedIn(payload));
 
-  setAuthorizationHeader(localStorage.authApp)
-  refreshToken().then((data) => {
-    localStorage.authApp = data.token
-    store.dispatch(userLoggedIn(data));
-  }).catch((data) => {
-    localStorage.authApp = ''
-    store.dispatch(userLoggedIn({}));
-    let { errors } = data.response.data
-    message.error(errors.error || 'Error while refreshing token.');
-  })
-}
+//   setAuthorizationHeader(localStorage.authApp)
+//   // debugger
+//   apis.refreshToken().then((data) => {
+//     localStorage.authApp = data.token
+//     store.dispatch(userLoggedIn(data));
+//   }).catch((data) => {
+//     debugger;
+//     localStorage.authApp = ''
+//     store.dispatch(userLoggedIn({}));
+//     let { errors } = data.response.data
+//     message.error(errors.error || 'Error while refreshing token.');
+//   })
+// }
 const renderApp = () =>
   render(
     <BrowserRouter>
